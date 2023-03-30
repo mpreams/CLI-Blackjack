@@ -3,7 +3,7 @@ from art import logo, card_art
 from replit import clear
 import random
 play = input("Do you want to play a game of Blackjack? Type 'y' or 'n': ").lower()
-def start_game():
+def start_game(play):
   ############### Our Blackjack House Rules #####################
   
   ## The deck is unlimited in size. 
@@ -17,9 +17,9 @@ def start_game():
   ## The computer is the dealer.
   hand = []
   computer_hand = []
-  i = 0
   #deal cards to specified person
   def deal(x, person):
+    """deals 'x' cards to chosen 'person' """
     if person == "player":
       for i in range(x):
         hit_h = random.choice(cards)
@@ -28,10 +28,10 @@ def start_game():
       for i in range(x):
         hit_c = random.choice(cards)
         computer_hand.append(hit_c)
-
+#display cards
   def display(x):
+    """display cards on hand"""
     j = 0
-    show = []
     while (j < len(x)):
       j += 1
       card_id = x[j-1]
@@ -39,9 +39,12 @@ def start_game():
       print(pic)
 
   #ask to play
-  if play == "y" or play == "yes" or again == "y" or again == "yes":
+  if play == "y" or play == "yes":
     print(logo)
     deal(2, "player")
+    if 11 in hand and sum(hand) > 21:
+      hand.remove(11)
+      hand.append(1)
     deal(2, "computer")
     print(f"  Your cards: {hand}, {display(hand)} current score: {sum(hand)}")
     print(f"  Computer's first card: {computer_hand[0]}, {card_art[computer_hand[0]]}")
@@ -79,8 +82,8 @@ def start_game():
   again = input("Play again? 'y' or 'n': ").lower()
   if again == "y" or again == "yes":
     clear()
-    start_game()
-start_game()
+    start_game(again)
+start_game(play)
 
 
 
